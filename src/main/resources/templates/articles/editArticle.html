@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="navbarAccueil.html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+    <title>Modifier Article</title>
+</head>
+<body class="text-bg-light p-3">
+<div layout:fragment="lecontenu">
+<h4><a class="text-decoration-none text-info" th:href="@{/redact/index}"><i class="bi-house"></i>Liste des publications</a></h4>
+    <div class="container mt-3">
+        <h2>Modifier un article</h2>
+        <form method="post" th:action="@{saveModifArticle}">
+            <div class="mb-3 mt-3">
+                <label for="titre">Titre :</label>
+                <input type="text" class="form-control" id="titre" placeholder="titre" name="titre"
+                       th:field="*{article.titre}">
+            </div>
+            <div class="mb-3 mt-3">
+                <label for="contenu">Contenu :</label><br>
+                <textarea cols="60" ROWS="4" class="form-control" id="contenu" placeholder="contenu" name="contenu"
+                          th:field="*{article.contenu}"></textarea>
+            </div>
+            <div class="mb-3">
+                <input type="checkbox"  checked="checked" id="public" placeholder="public" name="public"
+                       th:field="*{article._public}">
+                <label for="public">Public</label>
+            </div>
+            <div class="mb-3" sec:authorize="hasRole('ROLE_MODER')">
+                <input type="checkbox" id="modere" placeholder="modere" name="modere"
+                       th:field="*{article.modere}">
+                <label for="modere">Moderé</label>
+            </div>
+            <!-- hidden -->
+            <input type="hidden" name="compte" id="id" th:field="*{article.idArticle}" />
+            <input type="hidden" name="compte" id="compte" th:field="*{article.compte}" />
+            <!--<input type="text" id="date" name="date" th:field="*{article.date}"> ???-->
+
+            <button type="submit" class="btn btn-info">Modifier</button>
+
+        </form>
+    </div>
+    </div>
+</body>
+</html>

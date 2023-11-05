@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>-->
+
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <title>Liste articles</title>
+</head>
+<body>
+    <h6><a th:href="@{/redact/index}">Accueil</a> </h6>
+    <table width="50%">
+    <thead>
+        <tr><th>Numéro</th><th>Pseudo</th><th>Validé</th></tr>
+    </thead>
+    <tbody>
+        <tr th:each="a:${liste}">
+            <!--<td th:text="${a.idCompte}"></td>
+            <td th:text="${a.isValide()}"></td>-->
+            <td th:text="${a}"></td>
+
+        </tr>
+    </tbody>
+    </table>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+    <title>formArticle</title>
+</head>
+<body class="text-bg-light p-3">
+<h4><a class="text-decoration-none text-info" th:href="@{/redact/index}"><i class="bi-house"></i>Liste des publications</a></h4>
+    <div class="container mt-3">
+    <h2>Publier un article</h2>
+    <form method="post" th:action="@{saveArticle}">
+        <div class="mb-3 mt-3">
+            <label for="titre">Titre :</label>
+            <input type="text" class="form-control" id="titre" placeholder="titre" name="titre"
+                   th:field="*{article.titre}">
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="contenu">Contenu :</label>
+            <textarea cols="60" rows="4" class="form-control" id="contenu" placeholder="contenu" name="contenu"
+                      th:field="*{article.contenu}"></textarea>
+        </div>
+        <div class="mb-3 mt-3">
+
+        </div>
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="public" placeholder="public" name="public"
+                   th:checked="${article._public}">
+            <label class="form-label" for="public">Public</label>
+        </div>
+        <button type="submit" class="btn btn-info">Publier</button>
+
+    </form>
+    </div>
+</body>
+</html>

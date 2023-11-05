@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+    <title>formcompte</title>
+</head>
+<body class="text-bg-light p-3">
+<h4><a class="text-info" th:href="@{/public/index}">
+    <i>Accueil</i></a></h4>
+
+<div class="container mt-3">
+    <h2>Création de compte</h2>
+    <form method="post" th:action="@{/public/savecompte}">
+        <div class="mb-3 mt-3 col-sm-4">
+            <label for="pseudo">Pseudo :</label>
+            <input type="text" class="form-control" id="pseudo" placeholder="Pseudo" name="pseudo"
+                   th:field="*{compte.pseudo}">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('compte.pseudo')}"  th:errors="*{compte.pseudo}"></p>
+        </div>
+        <div class="mb-3 mt-3 col-sm-4">
+            <label for="email">Email :</label>
+            <input type="email" class="form-control" id="email" placeholder="Email" name="email"
+                   th:field="*{compte.email}">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('compte.email')}"  th:errors="*{compte.email}"></p>
+        </div>
+        <div class="mb-3 mt-3 col-sm-4">
+            <label for="pwd">Password :</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Mot de passe" name="pwd"
+                   th:field="*{compte.motDePasse}">
+            <p class="alert alert-danger" th:if="${#fields.hasErrors('compte.motDePasse')}"  th:errors="*{compte.motDePasse}"></p>
+        </div>
+        <button type="submit" class="btn btn-info">Créer votre compte</button>
+    </form>
+</div>
+</body>
+</html>

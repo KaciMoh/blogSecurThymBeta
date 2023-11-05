@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="navbarAccueil.html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+    <title>Modifier Compte</title>
+</head>
+<body class="text-bg-light p-3">
+<div layout:fragment="lecontenu">
+<h4><a class="text-decoration-none text-info" th:href="@{/admin/listecomptesnonvalide}"><i class="bi-house"></i>Liste des comptes non validés</a></h4>
+    <div class="container mt-3">
+        <h2>Valider un compte</h2>
+        <form method="post" th:action="@{saveModifCompte}">
+
+            <div class="mb-3 mt-3">
+                <h6>IdCompte : <span  class="mb-3" th:text="${compte.idCompte}"></span></h6>
+            </div>
+            <div class="mb-3 mt-3">
+                <h6>Pseudo : <span  class="mb-3" th:text="${compte.pseudo}"></span></h6>
+            </div>
+
+            <div class="mb-3">
+                <input type="checkbox"  checked="checked" id="valide" placeholder="valide" name="valide"
+                       th:field="*{compte.valide}">
+                <label for="valide">Validé</label>
+            </div>
+            <!-- hidden -->
+            <input type="hidden" name="compte" id="id" th:field="*{compte.idCompte}" />
+
+            <button type="submit" class="btn btn-info">Valider</button>
+
+        </form>
+    </div>
+    </div>
+</body>
+</html>

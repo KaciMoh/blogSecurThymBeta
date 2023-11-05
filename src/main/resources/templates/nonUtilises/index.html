@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="barreNav.html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <title>Liste articles</title>
+</head>
+<body>
+
+    <div layout:fragment="lecontenu">
+    <!--<table class="table mt-3">
+    <thead>
+        <tr><th>Numéro</th><th>Titre</th><th>Date</th><th>Public</th><th>Modéré</th></tr>
+    </thead>
+    <tbody>
+        <tr th:each="a:${listeArticles}">
+            <td th:text="${a.idArticle}"></td>
+            <td th:text="${a.titre}"></td>
+            <td th:text="${#dates.format(a.date, 'dd-MM-yyyy')}"></td>
+            &lt;!&ndash;<td th:text="${a.compte.getPseudo()}"></td>&ndash;&gt;
+            <td th:text="${a._public}"></td>
+            <td th:text="${a.modere}"></td>
+
+            <td><a th:href="@{/redact/listecommentairesarticle(idArticle=${a.idArticle})}">Afficher</a></td>
+            <td><a th:href="@{/redact/editArticle(idArticle=${a.idArticle})}">Modifier son?</a></td>
+            <td><a th:href="@{/redact/supprimearticle(idArticle=${a.idArticle})}">Supprimer son?</a></td>
+        </tr>
+    </tbody>
+    </table>-->
+        <h3>En construction</h3>
+</div>
+</body>
+</html>

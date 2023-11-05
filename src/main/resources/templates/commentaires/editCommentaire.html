@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+    <title>Modifier commentaire</title>
+</head>
+<body class="text-bg-light p-3">
+    <h4><a class="text-decoration-none text-info" th:href="@{/redact/index}"><i class="bi-house"></i>Liste des publications</a></h4>
+    <div class="container mt-3">
+    <h2>Modification de commentaire</h2>
+    <form method="post" th:action="@{/redact/saveCommentaire(idArticle=${article.idArticle})}">
+
+        <div class="mb-3 mt-3">
+        <label for="contenu">Contenu :</label>
+            <textarea cols="50" rows="4" class="form-control" id="contenu" placeholder="contenu" name="contenu"
+                      th:field="*{commentaire.contenu}"></textarea>
+        </div>
+        <div class="mb-3 mt-3">
+        <input type="checkbox" checked name="public" id="public"  th:field="*{commentaire._public}" />
+        <label for="public">Publique :</label><br />
+        </div>
+        <!-- hidden -->
+        <input type="hidden"  th:field="*{commentaire.idCommentaire}"><br>
+        <input type="hidden"  th:field="*{commentaire.compte}"><br>
+        <button type="submit" class="btn btn-info">Modifier le commentaire</button>
+    </form>
+    </div>
+</body>
+</html>

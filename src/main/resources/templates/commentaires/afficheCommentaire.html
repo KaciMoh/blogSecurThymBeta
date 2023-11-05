@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="navbarAccueil.html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+
+    <title>Affiche un commentaires</title>
+</head>
+<body class="p-3 mb-2 bg-light bg-gradient text-white">
+<div layout:fragment="lecontenu">
+    <hr>
+<!--    <button class="bg-light" th:if="${#authentication.name.equalsIgnoreCase('anonymousUser')}"><a class="h6 text-info" th:href="@{/public/index}"><span class="bi-arrow-left"></span> Retour aux publications</a></button><br>
+    <button class="bg-light" th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}"><a class="h6 text-info" th:href="@{/redact/index}"><span class="bi-arrow-left"></span> Retour aux publications</a></button><br>-->
+
+    <div class="card bg-light text-dark">
+        <div class="card-body" th:text="${commentaire.contenu}"></div>
+        <div class="card-footer h6 text-xl-start" th:text="${'Commentaire publié par '+compte.getPseudo()+' le '+#dates.format(commentaire.getDate(),'dd-MM-yyyy')} "></div>
+
+    </div>
+
+    <hr>
+</div>
+</body>
+</html>

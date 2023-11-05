@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="navbarAccueil.html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/webjars/bootstrap-icons/1.10.5/font/bootstrap-icons.css">
+
+    <script src="/webjars/jquery/3.6.4/jquery.min.js"></script>
+
+    <title>Affiche article et commentaires</title>
+</head>
+<body class="p-3 mb-2 bg-light bg-gradient text-white">
+<div layout:fragment="lecontenu">
+    <button class="bg-light" th:if="${#authentication.name.equalsIgnoreCase('anonymousUser')}"><a class="h6 text-info" th:href="@{/public/index}"><span class="bi-arrow-left"></span> Retour aux publications</a></button><br><br>
+    <button class="bg-light" th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}"><a class="h6 text-info" th:href="@{/redact/index}"><span class="bi-arrow-left"></span> Retour aux publications</a></button><br><br>
+    <div class="card bg-light text-dark">
+        <div class="card-header"><span class="h4 text-xxl-start" th:text="${article.getTitre()}"></span>
+            - Auteur : <span class="h6 text-xxl-start" th:text="${compte.getPseudo()}"></span></div>
+        <div class="card-body" th:text="${article.contenu}"></div>
+        <div class="card-footer h6 text-xl-start" th:text="${'Modifié le '+#dates.format(article.getDateModif(),'dd-MM-yyyy')} "></div>
+    </div>
+    <hr>
+    <h6  class="text-bg-light text-black">Commentaires
+        <button type="button" class="btn btn-info"><a class="nav-link active" th:href="@{/redact/formcommentaire(idArticle=${article.getIdArticle()})}">Commenter</a></button></h6>
+
+    <table class="table">
+        <tr><!-- <th>Numéro</th> --><th>Contenu</th><!-- <th>Public</th><th>Modéré</th> --><th>Date</th></tr>
+        <tr th:each="a:${listecommentaires}">
+            <td th:text="${a.contenu}"></td>
+            <td th:text="${#dates.format(a.date, 'dd-MM-yyyy')}"></td>
+            <td th:if="${#authentication.name.equalsIgnoreCase('anonymousUser')}">
+                <a class="text-decoration-none text-info" th:href="@{/public/affichecommentaire(idCommentaire=${a.idCommentaire})}">
+                    Afficher1</a></td>
+            <td th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}">
+                <a class="text-decoration-none text-info" th:href="@{/redact/affichecommentaire(idCommentaire=${a.idCommentaire})}">
+                    Afficher</a></td>
+            <td th:if="${#authentication.name.equalsIgnoreCase(a.getCompte().getPseudo())}">
+                <a class="text-decoration-none text-info" th:href="@{/redact/editcommentaire(idCommentaire=${a.idCommentaire})}">
+                    Modifier</a></td>
+            <td th:if="${#authentication.name.equalsIgnoreCase(a.getCompte().getPseudo())}">
+                <a class="text-decoration-none text-info" th:href="@{/redact/supprimecommentaire(idCommentaire=${a.idCommentaire})}">
+                    Supprimer</a></td>
+
+        </tr>
+    </table>
+    </div>
+</body>
+</html>

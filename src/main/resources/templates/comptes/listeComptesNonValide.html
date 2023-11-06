@@ -27,11 +27,8 @@ layout:decorate="~{navbarAccueil.html}">
             <td th:text="${a.isValide()}"></td>
             <td><a class="text-decoration-none text-info">Modifier non fait</a></td>
             <td>
-                <a class="text-decoration-none text-info" th:href="@{/admin/editCompte(idCompte=${a.idCompte})}">
-                    Modifier</a></td>
-            <td>
-                <a class="text-decoration-none text-info" th:href="@{/admin/valideCompte(idCompte=${a.idCompte})}">
-                    Modifier2</a></td>
+                <a class="text-decoration-none text-info" th:href="@{/admin/validecompte(idCompte=${a.idCompte})}">
+                    Valider</a></td>
         </tr>
     </tbody>
     </table>

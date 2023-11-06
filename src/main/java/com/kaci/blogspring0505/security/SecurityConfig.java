@@ -31,30 +31,35 @@ public class SecurityConfig {
     // création d'un filtre
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+
         // Route à prendre après authentification
-        httpSecurity.formLogin(login -> login.defaultSuccessUrl("/redact/index")); // formulaire de connexion par défaut et démarrage
-        //httpSecurity.formLogin(login -> login.loginProcessingUrl("/connection")); //formulaire de connexion personnalisé
-        //httpSecurity.formLogin(login -> login.successForwardUrl("/connection")); // route vers '/login'
+        httpSecurity.formLogin(login -> login.defaultSuccessUrl("/redact/index")); // formulaire de connexion par défaut
+                                                                                   // et démarrage
 
-        // démarrage avec "/index" formulaire de connexion personnalisé obligatoire
-        //httpSecurity.formLogin().loginPage("/login").defaultSuccessUrl("/public/index").permitAll();
+        // ajout des autorisations
+        httpSecurity.authorizeHttpRequests().requestMatchers("/public/**").permitAll(); // 'public'
+        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasRole("REDACT"); // '/redact'autorisé pour
+                                                                                              // les trois rôles
+        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasRole("MODER");
+        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasRole("ADMIN");
+        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasRole("MODER");// '/moder' autorisé pour
+                                                                                           // MODER et ADMIN
+        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasRole("ADMIN");
+        httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN"); // '/moder' autorisé pour
+                                                                                            // ADMIN
 
-        // ajout des autorisations // méthode 1
-        httpSecurity.authorizeHttpRequests().requestMatchers("/public/**").permitAll();
-        /*httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasRole("REDACT");
-        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasRole("MODER");
-        httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN");*/
-
-        // Autoriser les différents outils de développement tels que 'bootstrap'
+        // Autoriser les différents outils de développement tels que 'bootstrap', ...
         httpSecurity.authorizeHttpRequests().requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll();
 
         // requêtes à sécuriser
         httpSecurity.authorizeHttpRequests().anyRequest().authenticated(); // toutes les requêtes doivent être
                                                                            // authentifiées
-        httpSecurity.exceptionHandling().accessDeniedPage("/nonautorise"); // message si route non autorisée
-        // httpSecurity.userDetailsService(userDetailService);//bd-v2
+
+        // Message à afficher si la route est non autorisée
+        httpSecurity.exceptionHandling().accessDeniedPage("/nonautorise");
+
+        // Route à prendre après la déconnection
         httpSecurity.logout().logoutSuccessUrl("/public/index").permitAll();
-        httpSecurity.logout().logoutSuccessUrl("/index").permitAll();
 
         return httpSecurity.build();
     }

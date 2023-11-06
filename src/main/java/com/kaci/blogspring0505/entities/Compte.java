@@ -29,8 +29,8 @@ public class Compte implements Serializable {
         private String pseudo;
 
         @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,}$", message = "Le mot de passe " +
-                "doit comporter 8 caractères minimum, dont au moins : " +
-                "une minuscule, une majuscule, un nombre " +"et un des caractères ! @ # $ %")
+                        "doit comporter 8 caractères minimum, dont au moins : " +
+                        "une minuscule, une majuscule, un nombre et un des caractères ! @ # $ %")
         private String motDePasse;
 
         private boolean efface;

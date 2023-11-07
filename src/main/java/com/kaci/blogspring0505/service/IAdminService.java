@@ -8,8 +8,11 @@ import java.util.List;
 
 public interface IAdminService {
     /* Compte */
-    //READ
-    // Liste des comptes valides
+    /// READ
+    // Liste des comptes
+    public List<Compte> listeComptes();
+
+    // Liste des comptes non validés
     public List<Compte> listeComptesNonValides();
 
     // fonctions de recherche --------
@@ -18,16 +21,16 @@ public interface IAdminService {
 
     // UPDATE
     Compte modifieCompte(Compte compte, Long id);
-    //Valider un compte
-
+    // Valider un compte
 
     public void validerCompte(Long idCompte);
+
     /* TypeCompte */
-    //READ
-    //Recherche un  type de compte par ID
+    // READ
+    // Recherche un type de compte par ID
     public TypeCompte chercheTypeCompteId(Long idTypeCompte);
 
-    //Recherche un type de compte par Label
+    // Recherche un type de compte par Label
     public TypeCompte chercheTypeCompteLabel(String label);
 
 }

@@ -102,9 +102,6 @@ public class RedacteurHtmlController {
         } catch (RuntimeException e) { // cas erreur
             return "redirect:'/redact/index'"; // retour à l'accueil
         }
-        /*Article article = iRedacteurService.chercheArticle(idArticle);
-        model.addAttribute("article", article);
-        return "articles/editArticle"; // formulaire de modification de l'article*/
     }
 
     // 2. Enregistrer les modifications
@@ -116,8 +113,6 @@ public class RedacteurHtmlController {
         String currentUserName = authentication.getName();
         Compte compte = iRedacteurService.chercheComptePseudo(currentUserName);
         article.setCompte(compte); // inserer le compte
-        //
-        //iRedacteurService.creeArticle(article);
         iRedacteurService.modifieArticle(article, idArticle);
         return "redirect:/redact/index";
     }

@@ -23,7 +23,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean // création d'utilisateurs BD-v1
+    @Bean // création d'utilisateurs dans une BDD
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
@@ -38,14 +38,15 @@ public class SecurityConfig {
 
         // ajout des autorisations
         httpSecurity.authorizeHttpRequests().requestMatchers("/public/**").permitAll(); // 'public'
-        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasRole("REDACT"); // '/redact'autorisé pour
-                                                                                              // les trois rôles
-        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasRole("MODER");
-        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasRole("ADMIN");
-        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasRole("MODER");// '/moder' autorisé pour
-                                                                                           // MODER et ADMIN
-        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasRole("ADMIN");
-        httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN"); // '/moder' autorisé pour
+        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasAnyRole("REDACT", "MODER", "ADMIN"); // 'redact'autorisé
+                                                                                                                   // pour
+                                                                                                                   // les
+                                                                                                                   // trois
+                                                                                                                   // rôles
+        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasAnyRole("MODER", "ADMIN");// 'moder'
+                                                                                                       // autorisé pour
+        // MODER et ADMIN
+        httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN"); // 'admin' autorisé pour
                                                                                             // ADMIN
 
         // Autoriser les différents outils de développement tels que 'bootstrap', ...

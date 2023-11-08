@@ -17,7 +17,7 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    // Encodage des mots de passe
+    // Cryptage des mots de passe
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -28,35 +28,28 @@ public class SecurityConfig {
         return new JdbcUserDetailsManager(dataSource);
     }
 
-    // création d'un filtre
+    // création d'un filtre : politique d'autorisations
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
         // Route à prendre après authentification
         httpSecurity.formLogin(login -> login.defaultSuccessUrl("/redact/index")); // formulaire de connexion par défaut
                                                                                    // et démarrage
-
         // ajout des autorisations
-        httpSecurity.authorizeHttpRequests().requestMatchers("/public/**").permitAll(); // 'public'
-        httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").hasAnyRole("REDACT", "MODER", "ADMIN"); // 'redact'autorisé
-                                                                                                                   // pour
-                                                                                                                   // les
-                                                                                                                   // trois
-                                                                                                                   // rôles
-        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasAnyRole("MODER", "ADMIN");// 'moder'
-                                                                                                       // autorisé pour
-        // MODER et ADMIN
-        httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN"); // 'admin' autorisé pour
+        httpSecurity.authorizeHttpRequests().requestMatchers("/public/**").permitAll(); // autorisé aux internautes
+        // httpSecurity.authorizeHttpRequests().requestMatchers("/redact/**").authenticated();//
+        // autorisé pour tout
+        // connecté
+        httpSecurity.authorizeHttpRequests().requestMatchers("/moder/**").hasAnyRole("MODER", "ADMIN");// autorisé pour
+                                                                                                       // MODER et ADMIN
+        httpSecurity.authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN"); // autorisé uniquement pour
                                                                                             // ADMIN
-
         // Autoriser les différents outils de développement tels que 'bootstrap', ...
         httpSecurity.authorizeHttpRequests().requestMatchers("/css/**", "/js/**", "/webjars/**").permitAll();
 
-        // requêtes à sécuriser
-        httpSecurity.authorizeHttpRequests().anyRequest().authenticated(); // toutes les requêtes doivent être
-                                                                           // authentifiées
+        // toutes les requêtes doivent être authentifiées (contrôlées)
+        httpSecurity.authorizeHttpRequests().anyRequest().authenticated();
 
-        // Message à afficher si la route est non autorisée
+        // Message à afficher si une requête n'est pas autorisée
         httpSecurity.exceptionHandling().accessDeniedPage("/nonautorise");
 
         // Route à prendre après la déconnection

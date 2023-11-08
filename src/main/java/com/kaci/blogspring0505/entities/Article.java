@@ -16,7 +16,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
-@NoArgsConstructor @AllArgsConstructor @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Article implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,15 +28,15 @@ public class Article implements Serializable {
     private String titre;
     private String contenu;
     @Temporal(TemporalType.DATE)
-    @Column(name = "Date-creation")
+    @Column(name = "date-creation")
     private Date date;
     @Temporal(TemporalType.DATE)
-    @Column(name = "Date-modif")
+    @Column(name = "date-modif")
     private Date dateModif;
-    
+
     @ManyToOne
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //optionnel: évite d'afficher systématiquement le compte
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //optionnel: évite
+    // d'afficher systématiquement le compte
     private Compte compte;
 
-    
 }

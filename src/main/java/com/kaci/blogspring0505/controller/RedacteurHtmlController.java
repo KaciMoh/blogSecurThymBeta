@@ -60,7 +60,6 @@ public class RedacteurHtmlController {
     // READ
     // liste des articles
     @GetMapping("/redact/index")
-    @PreAuthorize("hasRole('REDACT') or hasRole('MODER') or hasRole('ADMIN')") //
     public String listeArticle(Model model) {
         List<Article> articles = iRedacteurService.listeArticle();
         model.addAttribute("listeArticles", articles);

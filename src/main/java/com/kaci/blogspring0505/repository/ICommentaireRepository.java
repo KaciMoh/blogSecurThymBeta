@@ -19,23 +19,29 @@ import org.springframework.stereotype.Repository;
 public interface ICommentaireRepository extends JpaRepository<Commentaire, Long> {
     // READ
     // liste des commentaires d'un article
-    // List<Commentaire> findCommentairesByArticle(Article article); //OK
+    List<Commentaire> findCommentairesByArticle(Article article); // JPA
+    // JPQL
+
     @Query("SELECT a FROM Commentaire a INNER JOIN Article b ON a.article.idArticle=b.idArticle WHERE b.idArticle= :x")
     List<Commentaire> commentairesArticle(@Param("x") Long idArticle);
 
     // Affiche UN commentaire
-    // Commentaire findCommentaireByIdCommentaire(Long idCommentaire);
-    @Query("SELECT a FROM Commentaire a WHERE a.idCommentaire= :x")
+    Commentaire findCommentaireByIdCommentaire(Long idCommentaire); // JPA
+
+    @Query("SELECT a FROM Commentaire a WHERE a.idCommentaire= :x") // JPQL
     Commentaire chercheCommentaireId(@Param("x") Long idCommentaire);
 
     // Liste Commentaires publiques d'un article
-    // List<Commentaire> findCommentairesBy_publicIsTrueAndArticle(Article article);
+    List<Commentaire> findCommentairesBy_publicIsTrueAndArticle(Article article); // JPA
+    // JPQL
+
     @Query("SELECT a FROM Commentaire a INNER JOIN Article b ON a.article.idArticle=b.idArticle WHERE a._public=true  AND b.idArticle= :x")
     List<Commentaire> commentairesPublicsArticle(@Param("x") Long idArticle);
 
     // liste des commentaires non encore modérés
-    // List<Commentaire> findCommentairesByModereIsFalse();
-    @Query("SELECT a FROM Commentaire a WHERE a.modere=false")
+    List<Commentaire> findCommentairesByModereIsFalse(); // JPA
+
+    @Query("SELECT a FROM Commentaire a WHERE a.modere=false") // JPQL
     List<Commentaire> commentairesNonmoderes();
 
     // DELETE

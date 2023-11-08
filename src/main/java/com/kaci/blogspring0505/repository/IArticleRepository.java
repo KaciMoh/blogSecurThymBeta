@@ -16,26 +16,29 @@ import java.util.List;
 
 @Repository
 public interface IArticleRepository extends JpaRepository<Article, Long> {
-    /*** Articles *************/
     // READ
     // Liste de tous les articles
-    List<Article> findAll(); //JPA
-   /* @Query("SELECT a FROM Article a") // JPQL
-    List<Article> listeArticle();*/
+    List<Article> findAll(); // JPA
+
+    @Query("SELECT a FROM Article a") // JPQL
+    List<Article> listeArticle();
 
     // Liste des articles en attente de modération
-    // List<Article> findArticlesByModereIsFalse();
-    @Query("SELECT a FROM Article a WHERE a.modere=false")
+    List<Article> findArticlesByModereIsFalse();// JPA
+
+    @Query("SELECT a FROM Article a WHERE a.modere=false") // JPQL
     List<Article> articlesNonModeres();
 
     // Accueil site : Liste Articles publiques
-    // List<Article> findArticlesBy_publicIsTrue();
-    @Query("SELECT a FROM Article a WHERE a._public=true")
+    List<Article> findArticlesBy_publicIsTrue();// JPA
+
+    @Query("SELECT a FROM Article a WHERE a._public=true") // JPQL
     List<Article> articlesPublics();
 
     // Recherche d'un article avec son Id
-    // Article findByIdArticle(Long idArticle);
-    @Query("SELECT a FROM Article a WHERE a.idArticle= :x")
+    Article findByIdArticle(Long idArticle); // JPA
+
+    @Query("SELECT a FROM Article a WHERE a.idArticle= :x") // JPQL
     Article chercheArticleId(@Param("x") Long idArticle);
 
     // DELETE

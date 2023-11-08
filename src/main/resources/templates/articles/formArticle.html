@@ -12,7 +12,7 @@
     <title>formArticle</title>
 </head>
 <body class="text-bg-light p-3">
-<h4><a class="text-decoration-none text-info" th:href="@{/redact/index}"><i class="bi-house"></i>Liste des publications</a></h4>
+    <div layout:fragment="lecontenu"><button class="bg-light"><a class="h6 text-info" th:href="@{/redact/index}"><span class="bi-arrow-left"></span> Retour aux publications</a></button><br><br>
     <div class="container mt-3">
     <h2>Publier un article</h2>
     <form method="post" th:action="@{saveArticle}">

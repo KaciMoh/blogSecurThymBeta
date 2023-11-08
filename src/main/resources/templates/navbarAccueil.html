@@ -16,20 +16,14 @@
 <nav class="navbar navbar-expand-sm bg-info">
     <div class="container-fluid">
         <ul class="navbar-nav">
-            <li class="nav-item"  th:if="${#authentication.name.equalsIgnoreCase('anonymousUser')}">
-                <button class="bg-light">
-                    <a class="h6 text-info" th:href="@{/public/index}">
-                    <span class="glyphicon glyphicon-home"></span></a></button><br>
+            <li class="nav-item" sec:authorize="!isAuthenticated">
+                    <a class="text-dark text-decoration-none" th:href="@{/public/index}">
+                        <b>OneMediaPiece</b></a>
             </li>
-            <li class="nav-item"  th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}">
-                <button class="bg-light">
-                    <a class="h6 text-info" th:href="@{/redact/index}">
-                    </a></button><br>
+            <li class="nav-item" sec:authorize="isAuthenticated">
+                <a class="h5 font-weight-bold nav-link active" th:href="@{/redact/index}"><b>OneMediaPiece</b></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" ><b>OneMediaPiece</b></a>
-            </li>
-            <li class="nav-item" sec:authorize="isAuthenticated" >
+            <li class="nav-item" sec:authorize="isAuthenticated">
                 <a class="nav-link active" th:href="@{/redact/formArticle}">Publier</a>
             </li>
         </ul>
@@ -59,7 +53,7 @@
                 <ul class="dropdown-menu">
                     <a class="nav-link active" th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}" th:href="@{/logout}">Logout</a>
                 </ul>
-                <span th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}" 
+                <span class="text-white" th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}" 
                     th:text="Connecté"></span>
             </li>
             <li class="nav-item">

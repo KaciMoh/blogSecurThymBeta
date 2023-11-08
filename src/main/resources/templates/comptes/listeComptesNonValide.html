@@ -25,7 +25,6 @@ layout:decorate="~{navbarAccueil.html}">
             <td th:text="${a.idCompte}"></td>
             <td th:text="${a.pseudo}"></td>
             <td th:text="${a.isValide()}"></td>
-            <td><a class="text-decoration-none text-info">Modifier non fait</a></td>
             <td>
                 <a class="text-decoration-none text-info" th:href="@{/admin/validecompte(idCompte=${a.idCompte})}">
                     Valider</a></td>

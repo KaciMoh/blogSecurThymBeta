@@ -33,7 +33,7 @@
             <td th:text="${#dates.format(a.date, 'dd-MM-yyyy')}"></td>
             <td th:if="${#authentication.name.equalsIgnoreCase('anonymousUser')}">
                 <a class="text-decoration-none text-info" th:href="@{/public/affichecommentaire(idCommentaire=${a.idCommentaire})}">
-                    Afficher1</a></td>
+                    Afficher</a></td>
             <td th:if="${!#authentication.name.equalsIgnoreCase('anonymousUser')}">
                 <a class="text-decoration-none text-info" th:href="@{/redact/affichecommentaire(idCommentaire=${a.idCommentaire})}">
                     Afficher</a></td>

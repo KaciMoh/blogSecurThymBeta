@@ -40,11 +40,10 @@ public class Blogspring0505Application {
             JdbcUserDetailsManager jdbcUserDetailsManager) {
         // TypeCompte
         return args -> {
-            Stream.of("REDACT", "MODER", "ADMIN")
+            Stream.of("ROLE_REDACT", "ROLE_MODER", "ROLE_ADMIN")
                     .forEach(label -> {
                         TypeCompte typeCompte = new TypeCompte();
                         typeCompte.setLabel(label);
-
                         iTypeCompteRepository.save(typeCompte);
 
                     });
@@ -57,66 +56,51 @@ public class Blogspring0505Application {
             IArticleRepository iArticleRepository,
             ICommentaireRepository iCommentaireRepository,
             JdbcUserDetailsManager jdbcUserDetailsManager) {
-        // TypeCompte
+        // Compte
+        TypeCompte typeCompte1 = iTypeCompteRepository.findById(1L).orElse(null);
         return args -> {
-            Stream.of("ROLE_REDACT", "ROLE_MODER", "ROLE_ADMIN")
-                    .forEach(label -> {
-                        TypeCompte typeCompte = new TypeCompte();
-                        typeCompte.setLabel(label);
-
-                        iTypeCompteRepository.save(typeCompte);
-
-                    });
-
-            TypeCompte typeCompte1 = iTypeCompteRepository.findById(1L).orElse(null);
-
-            Stream.of("Moh", "Kaci", "Sali", "Margoche")
+            Stream.of("kaci", "muhend", "saly", "margot")
                     .forEach(pseudo -> {
                         Compte compte = new Compte();
                         compte.setPseudo(pseudo);
-                        compte.setEmail(pseudo + "@hamroun.fr");
-                        compte.setMotDePasse("azAZ12!@");
+                        compte.setEmail(pseudo + "@hamr.fr");
+                        compte.setMotDePasse(passwordEncoder.encode("abAB123!"));
                         compte.setBani(Math.random() > 0.1 ? false : true);
                         compte.setEfface((Math.random() > 0.1 ? false : true));
                         compte.setSignale(Math.random() > 0.1 ? false : true);
-                        compte.setValide(Math.random() > 0.7 ? false : true);
+                        compte.setValide(Math.random() > 0.5 ? false : true);
                         compte.setTypeCompte(typeCompte1);
-
                         iCompteRepository.save(compte);
-
-                        // Création de l'utilisateur correspondant à l'étudiant et attribution des rôles
-                        /*
-                         * // BD-v2
-                         * iAccountService.addNewUser(etudiant.getNom(),"1234");
-                         * iAccountService.addRoleToUser(etudiant.getNom(),"USER");
-                         * if(Math.random()>0.6)
-                         * iAccountService.addRoleToUser(etudiant.getNom(),"ADMIN");
-                         */
-                        // BD-v1
+                        // BDD
                         jdbcUserDetailsManager.createUser(User.withUsername(compte.getPseudo())
-                                .password(passwordEncoder.encode("1234")).roles("REDACT").build());
+                                .password(passwordEncoder.encode(compte.getMotDePasse())).roles("ROLE_REDACT").build());
 
                     });
 
             // Article
-            Compte compte1 = iCompteRepository.findById(1L).orElse(null);
+            Compte c1 = iCompteRepository.findById(1L).orElse(null);
+            Compte c2 = iCompteRepository.findById(2L).orElse(null);
+            Compte c3 = iCompteRepository.findById(3L).orElse(null);
+            Compte c4 = iCompteRepository.findById(4L).orElse(null);
             Stream.of("La fac", "A développer", "Le social", "La com")
                     .forEach(titre -> {
                         Article article = new Article();
                         article.setTitre(titre);
                         article.setContenu("Contenu de " + "\'" + titre + "\'");
                         article.setDate(new Date());
+                        article.setDateModif(new Date());
                         article.setModere(Math.random() > 0.5 ? false : true);
                         article.set_public(Math.random() > 0.1 ? true : false);
-                        article.setCompte(compte1);
-
+                        article.setCompte(
+                                Math.random() > 0.4 ? c1
+                                        : (Math.random() > 0.6 ? c2 : (Math.random() > 0.5 ? c3 : c4)));
                         iArticleRepository.save(article);
 
                     });
             // Commentaire
             Article article = iArticleRepository.findById(Math.random() > 0.8 ? 1L : 2L).orElse(null);
-            Compte compte2 = iCompteRepository.findById(21L).orElse(null);
-            Stream.of("Bien", "Très bien", "Passionnément", "Pas du tout")
+            Compte compte2 = iCompteRepository.findById(1L).orElse(null);
+            Stream.of("Bien", "Très bien", "Passionnément", "Pas du tout", "Pas interessant")
                     .forEach(contenu -> {
                         Commentaire commentaire = new Commentaire();
                         commentaire.setContenu(contenu);
@@ -124,65 +108,14 @@ public class Blogspring0505Application {
                         commentaire.set_public(Math.random() > 0.8 ? false : true);
                         commentaire.setModere(Math.random() > 0.8 ? false : true);
                         commentaire.setArticle(article);
-                        commentaire.setCompte(compte2);
+                        commentaire.setCompte(Math.random() > 0.4 ? c1
+                                : (Math.random() > 0.6 ? c2 : (Math.random() > 0.5 ? c3 : c4)));
 
                         iCommentaireRepository.save(commentaire);
 
                     });
         };
+
     }
 
-    // Utilisateurs BD-v1
-    // @Bean
-    CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager) {
-        // PasswordEncoder passwordEncoder= passwordEncoder();
-        return args -> {
-            /*
-             * UserDetails user=null; //pour vérifier
-             * user= jdbcUserDetailsManager.loadUserByUsername("user1"); //vérifier si
-             * 'user11' existe
-             * if(user == null) //le créer s'il n'existe pas
-             * jdbcUserDetailsManager.createUser(
-             * User.withUsername("user1").password(passwordEncoder.encode("1234")).roles(
-             * "USER").build()
-             * );
-             * user= jdbcUserDetailsManager.loadUserByUsername("user2"); //le créer s'il
-             * n'existe pas
-             * if(user == null)
-             * jdbcUserDetailsManager.createUser(
-             * User.withUsername("user2").password(passwordEncoder.encode("1234")).roles(
-             * "USER").build()
-             * );
-             * 
-             * user= jdbcUserDetailsManager.loadUserByUsername("admin"); //le créer s'il
-             * n'existe pas
-             * if(user == null)
-             * jdbcUserDetailsManager.createUser(
-             * User.withUsername("admin").password(passwordEncoder.encode("1234")).roles(
-             * "USER","ADMIN").build()
-             * );
-             */
-            jdbcUserDetailsManager.createUser(
-                    User.withUsername("redact").password(passwordEncoder.encode("1234")).roles("REDACT").build());
-            jdbcUserDetailsManager.createUser(
-                    User.withUsername("moder").password(passwordEncoder.encode("1234")).roles("REDACT", "MODER")
-                            .build());
-            jdbcUserDetailsManager.createUser(
-                    User.withUsername("admin").password(passwordEncoder.encode("1234"))
-                            .roles("REDACT", "MODER", "ADMIN").build());
-            // Modifier un user ?
-            // AppUser appUser = new
-            // AppUser("user1",jdbcUserDetailsManager.loadUserByUsername("user1").getPassword(),jdbcUserDetailsManager.loadUserByUsername("user1").getAuthorities().add("ROLE_ADMIN"));
-            /*
-             * jdbcUserDetailsManager.createUser(
-             * User.withUsername("user1").password(passwordEncoder.encode("1234")).roles(
-             * "USER","ADMIN").build()
-             * );
-             * UserDetails user= jdbcUserDetailsManager.loadUserByUsername("user1");
-             * //chercher
-             * jdbcUserDetailsManager.updateUser(user); //???
-             */
-
-        };
-    }
 }

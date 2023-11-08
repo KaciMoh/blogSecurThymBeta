@@ -25,7 +25,7 @@
         <tr th:each="a:${listeArticles}">
             <!--<td th:text="${a.idArticle}"></td>-->
             <td th:text="${a.titre}"></td>
-            <td><input type="text" size="30" th:value="${a.contenu}"></td>
+            <td><input type="text" readonly ="30" th:value="${a.contenu}"></td>
             <td th:text="${a.compte.getPseudo()}"></td>
             <td th:text="${#dates.format(a.date, 'dd-MM-yyyy')}"></td>
             <td th:text="${#dates.format(a.getDateModif(), 'dd-MM-yyyy')}"></td>

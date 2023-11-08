@@ -25,7 +25,6 @@
     <hr>
     <h6  class="text-bg-light text-black">
         <button type="button" class="btn btn-info"><a class="nav-link active" th:href="@{/redact/formcommentaire(idArticle=${article.getIdArticle()})}">Commenter</a></button></h6>
-
     <table class="table"> <!-- liste des commentaires -->
         <tr><th>Commentaires</th><th>De</th><th>Le</th></tr>
         <tr th:each="a:${listecommentaires}">
@@ -44,7 +43,6 @@
             <td th:if="${#authentication.name.equalsIgnoreCase(a.getCompte().getPseudo())}">
                 <a class="text-decoration-none text-info" th:href="@{/redact/supprimecommentaire(idCommentaire=${a.idCommentaire})}">
                     Supprimer</a></td>
-
         </tr>
     </table>
 </div>

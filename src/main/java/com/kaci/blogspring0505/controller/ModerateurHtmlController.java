@@ -14,32 +14,39 @@ import java.util.List;
 
 @Controller
 public class ModerateurHtmlController {
-    //@Qualifier("moderateurServiceImpl")
+    // @Qualifier("moderateurServiceImpl")
     @Autowired
     private IModerateurService iModerateurService;
     @Autowired
     private IRedacteurService iRedacteurService;
 
     /*** Articles *************/
-    //READ
+    // READ
 
     // Liste des articles en attente de modération
     @GetMapping("/moder/listearticlesnonmodere")
-    public String listeArticlesNonModere (Model model){
+    public String listeArticlesNonModere(Model model) {
         List<Article> articles = iModerateurService.listeArticlesNonModere();
-        model.addAttribute("listeArticles",articles);
+        model.addAttribute("listeArticles", articles);
         String titre = "Articles non encore modérés";
         model.addAttribute("titre", titre);
-        return "articles/listeArticles";
+        return "articles/listeArticlesNonModeres";
+    }
+
+    // Modérer un article
+    @GetMapping("/moder/moderearticle")
+    public String modereArticle(@RequestParam("idArticle") Long idArticle) {
+        iModerateurService.modereArticle(idArticle);
+        return "articles/messages/articleModere";
     }
 
     /*** Commentaire *************/
-    //READ
+    // READ
     // Liste des Commentaires en attente de modération
     @GetMapping("/moder/listecommentairesnonmodere")
-    public String listeCommentairesNonModere (Model model) {
+    public String listeCommentairesNonModere(Model model) {
         List<Commentaire> commentaires = iModerateurService.listeCommentairesNonModere();
-        model.addAttribute("listeCommentaires",commentaires);
+        model.addAttribute("listeCommentaires", commentaires);
         String titre = "Commentaires non encore modérés";
         model.addAttribute("titre", titre);
         return "commentaires/listeCommentaires";

@@ -67,7 +67,6 @@ public class AdminServiceImpl implements IAdminService {
         // iCompteRepository.validerCompte(idCompte);
         Compte compte = iCompteRepository.chercheCompteId(idCompte);
         try {
-            System.out.println("OKK: ");
             compte.setValide(true);
             iCompteRepository.save(compte);
         } catch (Exception e) {

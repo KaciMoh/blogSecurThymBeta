@@ -9,19 +9,18 @@ import java.util.List;
 
 public interface IInternauteService {
     /* Article */
-    //READ
+    // READ
     // Accueil site : Liste Articles publiques
     List<Article> listeArticlesPublic();
 
     /* Commentaires */
-    //READ
-    //Liste Commentaires publiques d'un article
-    //List<Commentaire> listeCommentairesPublic(Article article);
+    // READ
+    // Liste Commentaires publiques d'un article
+    // List<Commentaire> listeCommentairesPublic(Article article);
     List<Commentaire> commentairesPublicsArticle(Long idArticle);
 
     /* Compte */
-    //CREATE
+    // CREATE
     Compte creeCompte(Compte compte);
-
 
 }

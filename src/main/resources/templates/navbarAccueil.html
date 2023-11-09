@@ -32,8 +32,8 @@
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                    sec:authorize="hasRole('ROLE_MODER') or hasRole('ROLE_ADMIN')">Modérateur</a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item"  th:href="@{/moder/listearticlesnonmodere}">Articles non modérés</a></li>
-                    <li><a class="dropdown-item"  th:href="@{/moder/listecommentairesnonmodere}">Commentaires non modérés</a></li>
+                    <li><a class="dropdown-item"  th:href="@{/moder/listearticlesnonmodere}">Modération des articles</a></li>
+                    <!-- <li><a class="dropdown-item"  th:href="@{/moder/listecommentairesnonmodere}">Modération des commentaires</a></li> -->
                 </ul>
             </li>
                 <li class="nav-item dropdown">

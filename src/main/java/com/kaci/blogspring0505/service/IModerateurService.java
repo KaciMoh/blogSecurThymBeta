@@ -5,15 +5,18 @@ import com.kaci.blogspring0505.entities.Commentaire;
 
 import java.util.List;
 
-public interface IModerateurService{
+public interface IModerateurService {
     /*** Articles *************/
-    //READ
+    // READ
     // Liste des articles en attente de modération
     List<Article> listeArticlesNonModere();
 
+    // Modérer un article
+    public void modereArticle(Long idArticle);
+
     /*** Commentaires *************/
 
-    //READ
+    // READ
     // Liste des Commentaires en attente de modération
     List<Commentaire> listeCommentairesNonModere();
 }

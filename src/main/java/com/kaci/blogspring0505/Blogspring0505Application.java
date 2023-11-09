@@ -31,6 +31,29 @@ public class Blogspring0505Application {
         System.out.println("Accueil : http://localhost:8080/index ");
     }
 
+    // --------------------------------------------------------------------
+    /*
+     * PROCEDURE DE CREATION AUTOMATIQUE D'UN JEU DE DONNEES (4 étapes A, B, C et D)
+     */
+    // A - 1er Bean: Décommenter - Exécuter l'appli - Recommenter*-
+
+    // B - Création des 2 tables de sécurité,SQL:
+    /*
+     * create table
+     * 
+     * users(username varchar(50) not null primary key,password varchar(500) not
+     * null,enabled boolean not null);
+     * create table authorities (username varchar(50) not null,authority varchar(50)
+     * not null,constraint fk_authorities_users foreign key(username) references
+     * users(username));
+     * create unique index ix_auth_username on authorities (username,authority);
+     */
+
+    // C - 2e Bean : Décommenter - Exécuter l'appli - Recommenter
+    // D - modifier la table 'Authotities' pour mettre des rôles ROLE_MODER et
+    // ROLE_ADMIN
+    // -----------------------------------------------------------------------------------
+
     // Initialisation des données /******* Exécution au démarrage*/
     // TypeCompte
     // @Bean
@@ -50,8 +73,8 @@ public class Blogspring0505Application {
         };
     }
 
-    // Compte
-    // @Bean
+    // Compte, articles et Commentaires
+    @Bean
     CommandLineRunner start2(ITypeCompteRepository iTypeCompteRepository, ICompteRepository iCompteRepository,
             IArticleRepository iArticleRepository,
             ICommentaireRepository iCommentaireRepository,
@@ -73,7 +96,7 @@ public class Blogspring0505Application {
                         iCompteRepository.save(compte);
                         // BDD
                         jdbcUserDetailsManager.createUser(User.withUsername(compte.getPseudo())
-                                .password(passwordEncoder.encode(compte.getMotDePasse())).roles("ROLE_REDACT").build());
+                                .password(compte.getMotDePasse()).roles("REDACT").build());
 
                     });
 
@@ -82,7 +105,7 @@ public class Blogspring0505Application {
             Compte c2 = iCompteRepository.findById(2L).orElse(null);
             Compte c3 = iCompteRepository.findById(3L).orElse(null);
             Compte c4 = iCompteRepository.findById(4L).orElse(null);
-            Stream.of("La fac", "A développer", "Le social", "La com")
+            Stream.of("Le déploiement", "Le référencement", "La fac", "A développer", "Le social", "La com")
                     .forEach(titre -> {
                         Article article = new Article();
                         article.setTitre(titre);
@@ -92,13 +115,15 @@ public class Blogspring0505Application {
                         article.setModere(Math.random() > 0.5 ? false : true);
                         article.set_public(Math.random() > 0.1 ? true : false);
                         article.setCompte(
-                                Math.random() > 0.4 ? c1
+                                Math.random() > 0.5 ? c1
                                         : (Math.random() > 0.6 ? c2 : (Math.random() > 0.5 ? c3 : c4)));
                         iArticleRepository.save(article);
 
                     });
             // Commentaire
-            Article article = iArticleRepository.findById(Math.random() > 0.8 ? 1L : 2L).orElse(null);
+            Article article = iArticleRepository
+                    .findById(Math.random() > 0.5 ? 1L : (Math.random() > 0.5 ? 2L : (Math.random() > 0.5 ? 3L : 4L)))
+                    .orElse(null);
             Compte compte2 = iCompteRepository.findById(1L).orElse(null);
             Stream.of("Bien", "Très bien", "Passionnément", "Pas du tout", "Pas interessant")
                     .forEach(contenu -> {
